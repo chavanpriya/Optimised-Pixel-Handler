@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Optimised Pixel Handler</title>
+    <script type="text/javascript">
+        if ('serviceWorker' in navigator) {
+            console.log('Service Worker and Push is supported');
+
+            navigator.serviceWorker.register('sw2.js')
+                .then((swReg) => {
+                    console.log('Service Worker is registered', swReg);
+
+                    this.isSupported = true;
+
+                    swReg.pushManager.getSubscription()
+                        .then((isSubscribed) => {
+                            console.log('Succesfully subscribed ' + isSubscribed);
+                        })
+                        .catch((error) => {
+                            console.log('error: ' + error);
+                        });
+                })
+                .catch(function (error) {
+                    console.error('Service Worker Error', error);
+                });
+        } else {
+            console.warn('Push messaging is not supported');
+            alert('Push Not Supported');
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Optimised Pixel Handler</h1>
+    <img style="display: none;"
+        src="http://www.xyz.com/pixel.gif?interaction=UserClick&client=ad_media&os_name=macos&x1=google&x2=email&x3=pdfconvert&landing_url=abcd1">
+</body>
+
+</html>
